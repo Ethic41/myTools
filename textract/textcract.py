@@ -243,12 +243,12 @@ def extractParam(completeFile, fileName, paramName, mode=None, month="All", year
             line = line.split(":", 1)
             if line[0].strip(" ") == paramName.strip(" "):
                 if year == currentYear and month == currentMonth:
-                    if not os.path.exists(thisDir+"/converted/%s.csv"%(date+"_"+paramName)):
-                        with open(thisDir+"/converted/%s.csv"%(date+"_"+paramName), "ab") as f:
+                    if not os.path.exists(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+date+"_"+paramName)):
+                        with open(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+date+"_"+paramName), "ab") as f:
                             writer = csv.writer(f)
                             writer.writerow((dayDate, line[1]))
                     else:
-                        with open(thisDir+"/converted/%s.csv"%(date+"_"+paramName), "ab") as f:
+                        with open(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+date+"_"+paramName), "ab") as f:
                             writer = csv.writer(f)
                             if year == currentYear and month == currentMonth:
                                 writer.writerow((dayDate, line[1]))
@@ -264,22 +264,32 @@ def extractParam(completeFile, fileName, paramName, mode=None, month="All", year
             line = line.split(":", 1)
             if line[0].strip(" ") == paramName.strip(" "):
                 if year == currentYear:
-                    if not os.path.exists(thisDir+"/converted/%s.csv"%(year+"_"+paramName)):
-                        with open(thisDir+"/converted/%s.csv"%(year+"_"+paramName), "ab") as f:
+                    if not os.path.exists(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+year+"_"+paramName)):
+                        with open(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+year+"_"+paramName), "ab") as f:
                             writer = csv.writer(f)
                             writer.writerow((dayDate, line[1]))
                     else:
-                        with open(thisDir+"/converted/%s.csv"%(year+"_"+paramName), "ab") as f:
+                        with open(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+year+"_"+paramName), "ab") as f:
                             writer = csv.writer(f)
                             writer.writerow((dayDate, line[1]))
                     break
-
-
-
-
-
-
-
+    elif mode == "all":
+        dayDate = fileName[10:]
+        date = fileName[10:18]
+        currentYear = date[:4]
+        currentMonth = date[5:8]
+        for line in completeFile[:-2]:
+            line = line.split(":", 1)
+            if line[0].strip(" ") == paramName.strip(" "):
+                if not os.path.exists(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+paramName+"_all")):
+                    with open(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+paramName+"_all"), "ab") as f:
+                        writer = csv.writer(f)
+                        writer.writerow((dayDate, line[1]))
+                else:
+                    with open(thisDir+"/converted/%s.csv"%(fileName[:4]+"_"+paramName+"_all"), "ab") as f:
+                        writer = csv.writer(f)
+                        writer.writerow((dayDate, line[1]))
+                break
 
 
 def csvify(completeFile, fileName):
