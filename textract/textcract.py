@@ -20,7 +20,7 @@ def main():
     try:
         while(True):
             print("Welcome:\nThis Program allow you to extract text from file and save it to csv format\nNote: You can always use [Control-C] to 'quit' at any point in the program")
-            mode = raw_input("Choose mode:\n[1] ==> Auto {in this mode files will be automatically discovered and converted}\n[2] ==> Manual {Choose the files you want to convert}\n[3] ==> exit\n\n")
+            mode = raw_input("Choose mode:\n[1] ==> Auto {in this mode files will be automatically discovered and converted}\n[2] ==> Manual {Choose the files you want to convert}\n[3] ==> Extract specific parameter\n[4] ==> exit\n\n")
             if mode == "1":
                 auto()
                 print("Completed Successfully...")
@@ -30,6 +30,9 @@ def main():
                 print("Completed Successfully...")
                 break
             elif mode == "3":
+                manual()
+                print("Completed Successfully")
+            elif mode == "4":
                 print("GoodBye!")
                 exit()
             else:
@@ -84,6 +87,10 @@ def manual():
             extract(file)
     except Exception as e:
         error(e)
+
+
+def extractSpecificParam():
+    pass
 
 def extract(file):
     try:
