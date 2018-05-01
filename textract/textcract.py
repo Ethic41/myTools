@@ -30,8 +30,9 @@ def main():
                 print("Completed Successfully...")
                 break
             elif mode == "3":
-                manual()
+                extractSpecificParam()
                 print("Completed Successfully")
+                break
             elif mode == "4":
                 print("GoodBye!")
                 exit()
@@ -62,7 +63,7 @@ def auto():
 
 
 
-def manual():
+def manual(paramName=None, mode=None, month=None, year=None):
     try:
         currentDirList = os.listdir(thisDir)
         files = []
@@ -84,15 +85,33 @@ def manual():
             chosenList.append(files[choice])
 
         for file in chosenList:
-            extract(file)
+            extract(file, paramName=paramName, mode=mode, month=month, year=year)
     except Exception as e:
         error(e)
 
 
 def extractSpecificParam():
-    pass
+    paramName = raw_input("\nSpecify the parameter to extract:\n\n")
+    if paramName:
+        mode = raw_input("\nChoose mode:\n[1] ==> Extract all Chosen parameters to single file\n[2] ==> Extract Chosen parameter on monthly basis\n[3] ==> Extract Chosen parameter on Annual basis\n[4] ==> exit\n\n")
+        if mode:
+            if mode == "1":
+                manual(paramName=paramName, mode="all")
+            elif mode == "2":
+                monthMap = {"1":"Jan", "2":"Feb", "3":"Mar", "4":"Apr", "5":"May", "6":"Jun", "7":"Jul", "8":"Aug", "9":"Sep", "10":"Oct", "11":"Nov", "12":"Dec", "13":"All"}
+                month = raw_input("specify a month:\n[1] == Jan\n[2] ==> Feb\n[3] ==> Mar\n[4] ==> Apr\n[5] ==> May\n[6] ==> Jun\n[7] == Jul\n[8] ==> Aug\n[9] ==> Sep\n[10] ==> Oct\n[11] ==> Nov\n[12] ==> Dec\n[13] ==> All\n\n\n")
+                month = monthMap[month]
+                year = raw_input("specify year:\n")
+                if month and year:
+                    manual(paramName=paramName, mode="monthly", month=month, year=year)
+            elif mode == "3":
+                year = raw_input("specify year:\n")
+                if year:
+                    manual(paramName=paramName, mode="yearly", year=year)
+            elif mode == "4":
+                exit()
 
-def extract(file):
+def extract(file, paramName=None, mode=None, month=None, year=None):
     try:
         #open the file for reading
         with open(thisDir+"/"+file, "rb") as f:
@@ -184,7 +203,14 @@ def extract(file):
                 completeFile.append(content)
 
             #calling the function to save the file in csv
-            csvify(completeFile, fileName)
+            if not paramName:
+                csvify(completeFile, fileName)
+            elif mode=="all":
+                extractParam(completeFile, fileName, paramName, mode="all")
+            elif mode == "monthly":
+                extractParam(completeFile, fileName, paramName, mode="monthly", month=month, year=year)
+            elif mode == "yearly":
+                extractParam(completeFile, fileName, paramName, mode="yearly", year=year)
 
             #Emptying the list in preparation for the next iteration
             firstPart = []
@@ -198,6 +224,61 @@ def extract(file):
             mp21ParamIndexes = []
     except Exception as e:
         error(e)
+
+
+def extractParam(completeFile, fileName, paramName, mode=None, month="All", year=None):
+
+    if not os.path.exists(thisDir+"/converted"):
+        os.mkdir(thisDir+"/converted")
+
+
+    if mode == "monthly":
+        dayDate = fileName[10:]
+        date = fileName[10:18]
+        currentYear = date[:4]
+        currentMonth = date[5:8]
+        if month == "All":
+            currentMonth = "All"
+        for line in completeFile[:-2]:
+            line = line.split(":", 1)
+            if line[0].strip(" ") == paramName.strip(" "):
+                if year == currentYear and month == currentMonth:
+                    if not os.path.exists(thisDir+"/converted/%s.csv"%(date+"_"+paramName)):
+                        with open(thisDir+"/converted/%s.csv"%(date+"_"+paramName), "ab") as f:
+                            writer = csv.writer(f)
+                            writer.writerow((dayDate, line[1]))
+                    else:
+                        with open(thisDir+"/converted/%s.csv"%(date+"_"+paramName), "ab") as f:
+                            writer = csv.writer(f)
+                            if year == currentYear and month == currentMonth:
+                                writer.writerow((dayDate, line[1]))
+                    break
+
+
+    elif mode == "yearly":
+        dayDate = fileName[10:]
+        date = fileName[10:18]
+        currentYear = date[:4]
+        currentMonth = date[5:8]
+        for line in completeFile[:-2]:
+            line = line.split(":", 1)
+            if line[0].strip(" ") == paramName.strip(" "):
+                if year == currentYear:
+                    if not os.path.exists(thisDir+"/converted/%s.csv"%(year+"_"+paramName)):
+                        with open(thisDir+"/converted/%s.csv"%(year+"_"+paramName), "ab") as f:
+                            writer = csv.writer(f)
+                            writer.writerow((dayDate, line[1]))
+                    else:
+                        with open(thisDir+"/converted/%s.csv"%(year+"_"+paramName), "ab") as f:
+                            writer = csv.writer(f)
+                            writer.writerow((dayDate, line[1]))
+                    break
+
+
+
+
+
+
 
 
 
