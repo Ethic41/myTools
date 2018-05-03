@@ -42,7 +42,7 @@ def percentage(fileName, outfile):
 	for item in linesDict:
 		itemValue = linesDict[item]
 		percentage = float(itemValue)/float(numberOfLines) * 100
-		percentDict[item] = str(percentage)+"%"
+		percentDict[item] = str("%.2f"%percentage)+"%"
 
 	with open(outfile, "ab") as f:
 		for item in percentDict:
