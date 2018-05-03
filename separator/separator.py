@@ -12,8 +12,8 @@ def main():
 	parser = argparse.ArgumentParser(description="Separate the file lines based on parameter you specify")
 	parser.add_argument("file", help="specify a input fileName")
 	parser.add_argument("-p", "--parameter", help="the parameter to separate the lines by", required=True)
-	parser.add_argument("-m", "--max", help="optional max[of the parameter] to split lines", default=None)
-	parser.add_argument("-i", "--index", help="index of the the data to return e.g 2,5", required=True)
+	parser.add_argument("-m", "--max", help="optional max[of the parameter] to split lines", default=None, type=int)
+	parser.add_argument("-i", "--index", help="index of the the data to return e.g 2,5", required=True, nargs="+")
 	parser.add_argument("-f", "--outFile", help="the file to output the result [default = separated.dmd]", default="separated.dmd")
 	parser.add_argument("-n", "--newParam", help="optional new parameter to separate the result if it's multiple[default is white space]", default=":")
 	args = parser.parse_args()
@@ -33,11 +33,10 @@ def separator(fileName, parameter, index, outfile, max=None, newParam=None):
 	for line in strippedLines:
 		validLine = []
 		if max:
-			splittedLine = line.split(parameter, int(max))
+			splittedLine = line.split(parameter, max)
 		else:
 			splittedLine = line.split(parameter)
 
-		index = list(index)
 		if len(index) > 1:
 			for i in index:
 				validLine.append(splittedLine[int(i)])
