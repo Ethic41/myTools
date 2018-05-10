@@ -2,6 +2,7 @@
 #Author: Dahir Muhammad Dahir
 #Date: 26th-April-2018
 #About: extract text to csv file
+#License: MIT License (find attached with file)
 
 
 import os
