@@ -12,7 +12,7 @@ pattern = r"\s"
 
 def main():
 	while(True):
-		inputPayload = raw_input("give me the payload:\n")
+		inputPayload = raw_input("\n\ngive me the payload:\n")
 		if inputPayload == "exit":
 			exit()
 		controlledPayload = re.sub(controlPattern, "ayilaR", inputPayload)
