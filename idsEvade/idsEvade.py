@@ -18,7 +18,7 @@ def main():
 		controlledPayload = re.sub(controlPattern, "ayilaR", inputPayload)
 		cleanPayload = re.sub(pattern, "/*%s*/"%("".join(random.sample(letters, 4))), controlledPayload)
 		finalPayload = re.sub("ayilaR", " -- ", cleanPayload)
-		print("Here you go:\n%s"%(finalPayload))
+		print("Here you go:\n\n\n%s"%(finalPayload))
 
 
 
