@@ -69,6 +69,7 @@ def rehash(filename, username, password=None):
 				login = s.post(loginUrl, data=loginPayload)
 				if login.status_code == 200 and "Lecturer" in login.content:
 					lastKnownPassword = password
+					print("Processing...")
 					for word in cleanWords:
 						changePassPayload = {"oldPassword":lastKnownPassword, "newPassword":word, "confirmPassword":word, "psubmit":""}
 						changePass = s.post(changePassUrl, data=changePassPayload)
@@ -109,7 +110,6 @@ def getPassHash(username):
 			soup = bs(str(tag), "html.parser")
 			hashed = soup.find("a").string
 			hash = hashed.strip("\n").strip(" ").strip("\n").strip("\n")
-			print(hash)
 			return hash
 	except Exception as e:
 		errorControl(e)
