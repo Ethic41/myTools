@@ -9,7 +9,11 @@ import re
 import argparse
 import requests
 import random
+import sys
+reload(sys)
 
+
+sys.setdefaultencoding("utf8")
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.3; Win64; x64) \
 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"}
 
@@ -60,7 +64,7 @@ def rehash(filename, username, password=None):
 		success = "Passwords updated successfully"
 		failure = "Sorry old password is wrong"
 
-		with open(thisDir+"/%s_withHashes.dmd"%(filename[:-4]), "a") as f:
+		with open(thisDir+"/%s_withHashes.dmd"%(filename[:-4]), "ab") as f:
 			with requests.Session() as s:
 				login = s.post(loginUrl, data=loginPayload)
 				if login.status_code == 200 and "Lecturer" in login.content:
