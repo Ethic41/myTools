@@ -39,14 +39,20 @@ def separator(fileName, parameter, index, outfile, max=None, newParam=None):
 
 		if len(index) > 1:
 			for i in index:
-				validLine.append(splittedLine[int(i)])
+				try:
+					validLine.append(splittedLine[int(i)])
+				except IndexError as e:
+					pass
 
 			if newParam:
 				newLine = newParam.join(validLine)
 				newList.append(newLine)
 
 		else:
-			newList.append(splittedLine[int(index[0])])
+			try:
+				newList.append(splittedLine[int(index[0])])
+			except IndexError as e:
+				pass
 
 	newList.sort()
 
