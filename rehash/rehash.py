@@ -79,6 +79,7 @@ def rehash(filename, username, password=None):
 							passHash = getPassHash(username)
 						else:
 							print("please check something is wrong with the password change process")
+							exit()
 
 						if passHash:
 							f.write("%s ==> %s\n"%(word, passHash))
