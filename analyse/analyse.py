@@ -14,11 +14,12 @@ def main():
 	parser.add_argument("-f", "--outfile", help="file to write the output [default is 'analysed.dmd']", default="analysed.dmd")
 	parser.add_argument("-M", "--max", help="return top of the number specified [eg -M 3 {top 3}]", type=int)
 	parser.add_argument("-m", "--min", help="return least of the number specified [eg -m 4 {least 4}]", type=int)
+	parser.add_argument("-U", "--unique", help="return unique list", nargs="?", const=True)
 	args = parser.parse_args()
-	analyse(args.file, args.outfile, args.percentage, args.max, args.min)
+	analyse(args.file, args.outfile, args.percentage, args.max, args.min, args.unique)
 
 
-def analyse(fileName, outfile, percent=None, maxi=None, mini=None):
+def analyse(fileName, outfile, percent=None, maxi=None, mini=None, uniq=None):
 	if percent:
 		percentage(fileName, outfile)
 
@@ -29,6 +30,10 @@ def analyse(fileName, outfile, percent=None, maxi=None, mini=None):
 	if mini:
 		percentDict = percentage(fileName, outfile, called=True)
 		minimum(percentDict, mini)
+
+	if uniq:
+		percentDict = percentage(fileName, outfile, called=True)
+		unique(percentDict)
 
 
 def percentage(fileName, outfile, called=None):
@@ -63,6 +68,7 @@ def percentage(fileName, outfile, called=None):
 	if called:
 		return percentDict
 
+
 def maximum(percentDict, num):
 	with open("top%d.dmd"%(num), "ab") as f:
 		for i in range(num):
@@ -74,6 +80,8 @@ def maximum(percentDict, num):
 					lastMaxItem = item
 					break
 			percentDict.pop(lastMaxItem)
+	print("Done...")
+
 
 def minimum(percentDict, num):
 	with open("least%d.dmd"%(num), "ab") as f:
@@ -86,6 +94,15 @@ def minimum(percentDict, num):
 					lastMinItem = item
 					break
 			percentDict.pop(lastMinItem)
+	print("Done...")
+
+
+def unique(percentDict):
+	with open("unique.dmd", "ab") as f:
+		for item in percentDict:
+			f.write(item+"\n")
+	print("Done...")
+
 
 if __name__ == '__main__':
 	main()
