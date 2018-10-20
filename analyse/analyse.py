@@ -2,7 +2,7 @@
 #Author: Dahir Muhammad Dahir
 #Date: 3rd-May-2018
 #About: Performs different analysis on the content of a file
-#trying to test commits
+
 
 import os
 import argparse
