@@ -3,6 +3,7 @@
 #Date: 19th-November-2018
 #About: script for automatically issuing queries to target vulnerable
 #       to sql Injection and supporting stacked queries
+#!/usr/bin/python3
 
 import os
 import re
@@ -119,7 +120,7 @@ def queryDB(query):
 
 def writeQuery(query):
     with open(thisDir+"/queriesHistory.dmd", "a") as f:
-        f.write('[' + current_time + ']' + query +"\n")
+        f.write('[' + current_time() + ']' + query +"\n")
 
 
 if __name__=="__main__":
