@@ -1,0 +1,13 @@
+exfil will be an sqlinjection automatic exploitation tool, it should allow the following features:
+
+#create new project
+#open existing project
+#delete existing project
+#should hold the projects in it's projects directory
+#should start by retrieving the available databases
+#from the available databases should be able to retrieve tables
+#from the availabe table retrieve columns
+#from the columns retrieve rows
+#should be able to use existing data or request fresh data
+#should by default support obfuscation
+#should be able to retrieve all or specific or search for matching items
