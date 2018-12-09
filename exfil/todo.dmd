@@ -11,3 +11,5 @@ exfil will be an sqlinjection automatic exploitation tool, it should allow the f
 #should be able to use existing data or request fresh data
 #should by default support obfuscation
 #should be able to retrieve all or specific or search for matching items
+#get current user
+#version and other custom commands
